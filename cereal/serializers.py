@@ -1,8 +1,8 @@
 def values(include=None):
 	"""
 	Usage:
-		cereal_box.register(Model, [], serializer=values())
-		cereal_box.register(Model, [], serializer=values(['id', 'name']))
+		cereal.register(Model, [], serializer=values())
+		cereal.register(Model, [], serializer=values(['id', 'name']))
 	"""
 	include = include or []
 	def values_fn(queryset):

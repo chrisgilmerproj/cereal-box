@@ -1,8 +1,8 @@
 def filter(manager='_default_manager'):
 	"""
 	Usage:
-		cereal_box.register(Model, [filter()]) # Defaults to _default_manager
-		cereal_box.register(Model, [filter('objects')])
+		cereal.register(Model, [filter()]) # Defaults to _default_manager
+		cereal.register(Model, [filter('objects')])
 	"""
 	def filter_fn(model, **kwargs):
 		"""

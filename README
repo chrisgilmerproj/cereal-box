@@ -10,10 +10,10 @@ cereal-box is a serialization library that exposes defined functions through a c
 		text = django.db.models.CharField(max_length=20)
 
 
-	import cereal_box
-	cereal_box.register(Example, [cereal_box.functions.filter()])
+	import cereal
+	cereal.register(Example, [cereal.functions.filter()])
 
 ...
 
-	import cereal_box
-	cereal_box.call('example', 'filter')
+	import cereal
+	cereal.call('example', 'filter')
