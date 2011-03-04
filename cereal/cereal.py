@@ -5,7 +5,8 @@ models  = {} # {'model':Model}
 serials = {} # {'model':json.dumps}, name conflict with serializers
 funcs   = {} # {'model':{'filter':Model.filter}}, name conflict with functions
 
-green = lambda message: '\033[1;31m%s\033[0m' % message
+red   = lambda message: '\033[1;31m%s\033[0m' % message
+green = lambda message: '\033[1;32m%s\033[0m' % message
 
 def register(model, functions, serializer=None):
 	"""
@@ -18,7 +19,7 @@ def register(model, functions, serializer=None):
 	name = model.__name__.lower()
 	if name in models:
 		logging.warning('Model %s already registered with cereal-box',
-				green(model.__name__))
+				red(model.__name__))
 	models[name]  = model
 	serials[name] = serializer or serializers.values()
 	funcs[name]   = {}
@@ -26,10 +27,11 @@ def register(model, functions, serializer=None):
 		fn_name = fn.__name__.lower()
 		if fn_name in funcs[name]: logging.warning(
 			'Function [%s] already registered on model [%s] with cereal-box',
-			fn_name, model.__name__)
+			red(fn_name), red(model.__name__))
 		else:
 			funcs[name][fn_name] = fn
-			logging.debug('Registered %s on %s', fn_name, model.__name__)
+			logging.debug('Registered %s on %s',
+					green(fn_name), green(model.__name__))
 
 def call(model, function, **kwargs):
 	"""
