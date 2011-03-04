@@ -1,2 +1,6 @@
+activate
+env
+
+*.db
 *.pyc
 *.swp

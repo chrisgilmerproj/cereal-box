@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "cereals.cereal", "fields": {"sugar_level": 9, "name": "Lucky Charms"}}, {"pk": 2, "model": "cereals.cereal", "fields": {"sugar_level": 10, "name": "Count Chocula"}}, {"pk": 3, "model": "cereals.cereal", "fields": {"sugar_level": 6, "name": "Cap'n Crunch"}}]

@@ -1,5 +1,11 @@
 import logging
-import serializers, settings
+import serializers
+
+models  = {} # {'model':Model}
+serials = {} # {'model':json.dumps}, name conflict with serializers
+funcs   = {} # {'model':{'filter':Model.filter}}, name conflict with functions
+
+green = lambda message: '\033[1;31m%s\033[0m' % message
 
 def register(model, functions, serializer=None):
 	"""
@@ -10,20 +16,20 @@ def register(model, functions, serializer=None):
 	serial    - An optional queryset serializer.
 	"""
 	name = model.__name__.lower()
-	if name in settings.models:
-		raise ValueError('Model %s already registered with cereal-box' % name)
-	settings.models[name]      = model
-	settings.serializers[name] = serializer or serializers.values()
-	settings.functions[name]   = {}
+	if name in models:
+		logging.warning('Model %s already registered with cereal-box',
+				green(model.__name__))
+	models[name]  = model
+	serials[name] = serializer or serializers.values()
+	funcs[name]   = {}
 	for fn in functions:
 		fn_name = fn.__name__.lower()
-		if fn_name in settings.functions[name]:
-			raise ValueError(
-				'Function %s already registered on model %s with cereal-box'
-				% (fn_name, name))
+		if fn_name in funcs[name]: logging.warning(
+			'Function [%s] already registered on model [%s] with cereal-box',
+			fn_name, model.__name__)
 		else:
-			settings.functions[name][fn_name] = fn
-			logging.debug('Registered %s on %s', fn_name, name)
+			funcs[name][fn_name] = fn
+			logging.debug('Registered %s on %s', fn_name, model.__name__)
 
 def call(model, function, **kwargs):
 	"""
@@ -32,6 +38,6 @@ def call(model, function, **kwargs):
 	function - The name of the function.
 	**kwargs - Function parameters.
 	"""
-	return settings.serializers[model](
-			settings.functions[model][function](
-			settings.models[model], **kwargs))
+	return serials[model](
+			funcs[model][function](
+			models[model], **kwargs))

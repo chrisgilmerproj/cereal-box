@@ -5,9 +5,9 @@ cereal-box is a serialization library that exposes defined functions through a c
 
 ## Example
 	# models.py
-	import django.db.models
-	class Example(django.db.models.Model):
-		text = django.db.models.CharField(max_length=20)
+	from django.db import models
+	class Example(models.Model):
+		text = models.CharField(max_length=20)
 
 
 	import cereal
