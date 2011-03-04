@@ -6,4 +6,5 @@ class Cereal(models.Model):
 	def __unicode__(self): return self.name
 
 import cereal # Nevermind the naming snafu
-cereal.register(Cereal, [cereal.functions.filter()])
+cereal.register(Cereal, [cereal.functions.filter(),
+	cereal.functions.page_filter()])

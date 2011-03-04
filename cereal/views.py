@@ -4,7 +4,9 @@ from django.utils import simplejson as json
 
 import cereal
 
+def to_json(obj):
+	if type(obj) == ValuesQuerySet: return list(obj)
+
 def json_api(request, model, function):
-	ret = cereal.call(model, function, **request.REQUEST)
-	if type(ret) == ValuesQuerySet: ret = list(ret)
-	return HttpResponse(json.dumps(ret), mimetype='application/json')
+	return HttpResponse(json.dumps(cereal.call(model, function,
+		**request.REQUEST), default=to_json), mimetype='application/json')

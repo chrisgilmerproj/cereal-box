@@ -43,6 +43,10 @@ def call(model, function, **kwargs):
 	function - The name of the function.
 	**kwargs - Function parameters.
 	"""
-	ret = funcs[model][function](models[model], **kwargs)
-	if type(ret) == QuerySet: ret = serials[model](ret)
-	return ret
+	return funcs[model][function](models[model], **kwargs)
+
+def ize(queryset):
+	"""
+	Calls the appropriate serialize on a queryset.
+	"""
+	return serials[queryset.model.__name__.lower()](queryset)
