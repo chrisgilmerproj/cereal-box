@@ -1,0 +1,19 @@
+# cereal-box
+
+## Description
+cereal-box is a serialization library that exposes defined functions through a custom Django template tag and a JSON API.
+
+## Example
+	# models.py
+	import django.db.models
+	class Example(django.db.models.Model):
+		text = django.db.models.CharField(max_length=20)
+
+
+	import cereal_box
+	cereal_box.register(Example, [cereal_box.functions.filter()])
+
+...
+
+	import cereal_box
+	cereal_box.call('example', 'filter')
