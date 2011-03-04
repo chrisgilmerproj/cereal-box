@@ -1,4 +1,7 @@
 import logging
+
+from django.db.models.query import QuerySet
+
 import serializers
 
 models  = {} # {'model':Model}
@@ -40,6 +43,6 @@ def call(model, function, **kwargs):
 	function - The name of the function.
 	**kwargs - Function parameters.
 	"""
-	return serials[model](
-			funcs[model][function](
-			models[model], **kwargs))
+	ret = funcs[model][function](models[model], **kwargs)
+	if type(ret) == QuerySet: ret = serials[model](ret)
+	return ret

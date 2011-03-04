@@ -5,6 +5,6 @@ from django.utils import simplejson as json
 import cereal
 
 def json_api(request, model, function):
-	ret = cereal.call(model, function)
-	if isinstance(ret, ValuesQuerySet): ret = list(ret)
+	ret = cereal.call(model, function, **request.REQUEST)
+	if type(ret) == ValuesQuerySet: ret = list(ret)
 	return HttpResponse(json.dumps(ret), mimetype='application/json')
