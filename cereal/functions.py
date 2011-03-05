@@ -1,8 +1,5 @@
 import cereal
 
-def queryset(queryset, **kwargs):
-	pass
-
 def managerize(function):
 	"""
 	Decorator to parameterize the manager in functions.
@@ -26,7 +23,7 @@ def filter(model, manager, **kwargs):
 	return cereal.ize(getattr(model, manager).filter(**kwargs))
 
 @managerize
-def page_filter(model, **kwargs):
+def page_filter(model, manager, **kwargs):
 	"""
 	Applied paginated filter on Model.%s
 	""" % manager
