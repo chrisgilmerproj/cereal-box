@@ -18,14 +18,14 @@ def managerize(function):
 @managerize
 def filter(model, manager, **kwargs):
 	"""
-	Applied filter on Model.%s
-	""" % manager
+	Filter on Model.
+	"""
 	return cereal.ize(getattr(model, manager).filter(**kwargs))
 
 @managerize
 def page_filter(model, manager, **kwargs):
 	"""
-	Applied paginated filter on Model.%s
+	Paginated filter on Model.
 	""" % manager
 	ret = getattr(model, manager).filter(**kwargs)
 	return {'count':ret.count(), 'objects':cereal.ize(ret)}
