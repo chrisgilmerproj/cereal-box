@@ -26,6 +26,6 @@ def filter(model, manager, **kwargs):
 def page_filter(model, manager, **kwargs):
 	"""
 	Paginated filter on Model.
-	""" % manager
+	"""
 	ret = getattr(model, manager).filter(**kwargs)
 	return {'count':ret.count(), 'objects':cereal.ize(ret)}
