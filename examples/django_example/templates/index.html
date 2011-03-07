@@ -1,0 +1,23 @@
+{% load cereal_tags %}
+<html>
+	<head><title>Cereal Example Page</title></head>
+	<body>
+		<h3><a href="/api/cereal/filter?id=1">cereal.filter(id=1)</a></h3>
+		{% cereal cereal.filter id=1 as cereals %}
+		<ul>
+			{% for c in cereals %}
+			<li>{{c.name}}</li>
+			{% endfor %}
+		</ul>
+		<small>Raw: {{cereals}}</small>
+		<h3><a href="/api/cereal/page_filter?per_page=2&page=2">cereal.page_filter(per_page=2, page=2)</a></h3>
+		{% cereal cereal.page_filter per_page=2 page=2 as cereals_page %}
+		<ul>
+			{% for c in cereals_page.items %}
+			<li>{{c.name}}</li>
+			{% endfor %}
+		</ul>
+		Total items: {{cereals_page.total}}<br />
+		<small>Raw: {{cereals_page}}</small>
+	</body>
+</html>
