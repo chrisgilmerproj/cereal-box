@@ -32,6 +32,9 @@ def register(model, functions, serializer=None):
 			'Function [%s] already registered on model [%s] with cereal-box',
 			red(fn_name), red(model.__name__))
 		else:
+			if fn.__doc__: fn.__doc__ = fn.__doc__ % {'model':model.__name__,
+				'properties': ', '.join([f.name for f in model._meta.fields])}
+			fn.doc     = fn.__doc__ #XXX: Hack for /api/
 			funcs[name][fn_name] = fn
 			logging.debug('Registered %s on %s',
 					green(fn_name), green(model.__name__))

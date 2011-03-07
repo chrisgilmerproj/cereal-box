@@ -1,0 +1,17 @@
+<html>
+	<head><title>API Docs</title></head>
+	<body>
+		<h1>API Docs</h1>
+		{% for model, functions in calls.iteritems %}
+		<div class="model">
+			<h2>{{model}}</h2>
+			<ul>
+				{% for name, function in functions.iteritems %}
+				<li><a href="/api/{{model}}/{{name}}">{{name}}</a></li>
+				<pre>{{function.doc}}</pre>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endfor %}
+	</body>
+</html>
