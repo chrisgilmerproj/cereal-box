@@ -2,8 +2,9 @@
 <html>
 	<head><title>Cereal Example Page</title></head>
 	<body>
-		<h3><a href="/api/cereal/filter?id=1">cereal.filter(id=1)</a></h3>
-		{% cereal cereal.filter id=1 as cereals %}
+		<h3><a href="/api/cereal/filter?sugar_level=9">
+				cereal.filter(sugar_level=9)</a></h3>
+		{% cereal cereal.filter sugar_level=9 as cereals %}
 		<ul>
 			{% for c in cereals %}
 			<li>{{c.name}}</li>
