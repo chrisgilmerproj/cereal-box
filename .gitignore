@@ -4,3 +4,5 @@ env
 *.db
 *.pyc
 *.swp
+
+cereal.egg-info
