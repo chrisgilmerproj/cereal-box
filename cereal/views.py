@@ -5,8 +5,9 @@ from django.utils import simplejson as json
 
 import cereal
 
+translate = {ValuesQuerySet:lambda x: list(x)}
 def to_json(obj):
-	if type(obj) == ValuesQuerySet: return list(obj)
+	return translate.get(type(obj), str)(obj)
 
 def json_api(request, model, function):
 	return HttpResponse(json.dumps(cereal.call(model, function,

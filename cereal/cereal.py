@@ -1,7 +1,5 @@
 import logging
 
-from django.db.models.query import QuerySet
-
 import serializers
 
 models  = {} # {'model':Model}
