@@ -1,17 +1,35 @@
 <html>
-	<head><title>API Docs</title></head>
+	<head>
+		<style>
+			body, code {background-color:#322;}
+			a {color:#55a;}
+			h1 {border-top-left-radius:25px; border-top-right-radius:25px;
+				font-size:3em; margin:50px 140px -50px; padding:20px 0 10px;
+				text-align:center; width:250px;}
+			h1, h2 {color:#211;}
+			h2 {margin-left:10px;}
+			code, .docs {border-radius:25px;}
+			code {color: #fff; display:block;
+				padding:10px 40px 20px; margin:20px;}
+			.docs, h1 {background-color:#fff;}
+			.docs {font-family: sans; margin:50px; padding:20px;}
+		</style>
+		<title>API Docs</title>
+	</head>
 	<body>
 		<h1>API Docs</h1>
+		<div class="docs">
 		{% for model, functions in calls.iteritems %}
 		<div class="model">
 			<h2>{{model}}</h2>
 			<ul>
 				{% for name, function in functions.iteritems %}
-				<li><a href="/api/{{model}}/{{name}}">{{name}}</a></li>
-				<pre>{{function.doc}}</pre>
+				<li><a href="/api/{{model}}/{{name}}">{{name}}</a>
+				<code>{{function.doc|linebreaks}}</code></li>
 				{% endfor %}
 			</ul>
 		</div>
 		{% endfor %}
+		</div>
 	</body>
 </html>
