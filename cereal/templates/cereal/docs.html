@@ -26,7 +26,7 @@
 			<ul>
 				{% for name, function in functions.iteritems %}
 				<li><a href="/api/{{model}}/{{name}}">{{name}}</a>
-				<code>{{function.doc|linebreaks}}</code></li>
+				<code>{{function.doc|linebreaksbr}}</code></li>
 				{% endfor %}
 			</ul>
 		</div>
