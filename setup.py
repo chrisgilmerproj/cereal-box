@@ -13,7 +13,7 @@ setup(
 	license = 'MIT license',
 	description = 'Data feed library for Django models.',
 
-	long_description = open('README.md').read(),
+	long_description = open('README.markdown').read(),
 	requires = [],
 
 	classifiers = (
