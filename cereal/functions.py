@@ -17,6 +17,13 @@ def managerize(function):
 	return manager_fn
 
 @managerize
+def list(model, manager):
+	"""
+	Returns a list of %(model)ss (max 100 results).
+	"""
+	return cereal.ize(getattr(model, manager).all()[:100])
+
+@managerize
 def filter(model, manager, **kwargs):
 	"""
 	Filter on %(model)s by %(properties)s (max 100 results).
