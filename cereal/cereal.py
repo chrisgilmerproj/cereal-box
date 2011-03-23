@@ -37,6 +37,23 @@ def register(model, functions, serializer=None):
 			logging.debug('Registered %s on %s',
 					green(fn_name), green(model.__name__))
 
+from django.core.cache import cache
+
+def cached(time=60):
+	def memoize(fn):
+		def memoized(*args, **kwargs):
+			key = '%s|%s' % (','.join([str(a) for a in args]),
+					','.join(['%s:%s'%(k, kwargs[k])
+						for k in sorted(kwargs.keys())]))
+			ret = cache.get(key)
+			if not ret:
+				ret = fn(*args, **kwargs)
+				cache.set(key, ret, time)
+			return ret
+		return memoized
+	return memoize
+
+#@cached(60)
 def call(model, function, **kwargs):
 	"""
 	Calls a function on a registered model.
