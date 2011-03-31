@@ -10,8 +10,9 @@ class CerealNode(Node):
 		self.variable = variable
 		self.kwargs   = kwargs
 	def render(self, context):
-		context[self.variable] = cereal.call(
-				self.model, self.function, **self.kwargs)
+		context[self.variable] = cereal.call(self.model,
+				self.function, **dict((k, v.resolve(context))
+				for k,v in self.kwargs.iteritems()))
 		return ''
 
 def cereal_tag(parser, token):
@@ -21,7 +22,8 @@ def cereal_tag(parser, token):
 	"""
 	args = token.split_contents()
 	model, function = args[1].split('.')
-	kwargs = dict(((a.split('=')[0], a.split('=')[1]) for a in args[2:-2]))
+	kwargs = dict(((a.split('=')[0], Variable(
+		a.split('=')[1])) for a in args[2:-2]))
 	return CerealNode(model, function, args[-1], **kwargs)
 
 register.tag('cereal', cereal_tag)
