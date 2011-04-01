@@ -22,7 +22,7 @@ def cereal_tag(parser, token):
 	"""
 	args = token.split_contents()
 	model, function = args[1].split('.')
-	kwargs = dict(((a.split('=')[0], Variable(
+	kwargs = dict(((str(a.split('=')[0]), Variable(
 		a.split('=')[1])) for a in args[2:-2]))
 	return CerealNode(model, function, args[-1], **kwargs)
 
