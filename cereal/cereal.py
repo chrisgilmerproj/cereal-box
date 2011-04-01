@@ -5,6 +5,7 @@ import serializers
 models  = {} # {'model':Model}
 serials = {} # {'model':json.dumps}, name conflict with serializers
 funcs   = {} # {'model':{'filter':Model.filter}}, name conflict with functions
+docs    = {} # {'model':{'filter':'Docstring'}}, hack for Django 1.3
 
 red   = lambda message: '\033[1;31m%s\033[0m' % message
 green = lambda message: '\033[1;32m%s\033[0m' % message
@@ -24,6 +25,7 @@ def register(model, functions, serializer=None):
 	models[name]  = model
 	serials[name] = serializer or serializers.values()
 	funcs[name]   = {}
+	docs[name]    = {}
 	for fn in functions:
 		fn_name = fn.__name__.lower()
 		if fn_name in funcs[name]: logging.warning(
@@ -32,7 +34,7 @@ def register(model, functions, serializer=None):
 		else:
 			if fn.__doc__: fn.__doc__ = fn.__doc__ % {'model':model.__name__,
 				'properties': ', '.join([f.name for f in model._meta.fields])}
-			fn.doc = fn.__doc__ or 'Edit this function\'s docstring to customize this line.'
+			docs[name][fn_name] = fn.__doc__ or 'Edit this function\'s docstring to customize this line.'
 			funcs[name][fn_name] = fn
 			logging.debug('Registered %s on %s',
 					green(fn_name), green(model.__name__))

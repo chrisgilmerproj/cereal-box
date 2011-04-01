@@ -14,4 +14,4 @@ def json_api(request, model, function):
 		**request.REQUEST), default=to_json), mimetype='application/json')
 
 def docs(request):
-	return render_to_response('cereal/docs.html', {'calls':cereal.funcs})
+	return render_to_response('cereal/docs.html', {'docs':cereal.docs})

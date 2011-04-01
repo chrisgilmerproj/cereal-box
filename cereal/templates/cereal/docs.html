@@ -21,13 +21,13 @@
 	<body>
 		<h1>API Docs</h1>
 		<div class="docs">
-		{% for model, functions in calls.iteritems %}
+		{% for model, functions in docs.iteritems %}
 		<div class="model">
 			<h2>{{model}}</h2>
 			<ul>
 				{% for name, function in functions.iteritems %}
 				<li><a href="/api/{{model}}/{{name}}">{{name}}</a>
-				<code>{{function.doc|linebreaksbr}}</code></li>
+				<code>{{function|linebreaksbr}}</code></li>
 				{% endfor %}
 			</ul>
 		</div>
