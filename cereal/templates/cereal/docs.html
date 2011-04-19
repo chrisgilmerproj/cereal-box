@@ -10,20 +10,27 @@
 			h1, .docs {font-family:monospace;
 				text-rendering:optimizeLegibility;}
 			h2 {margin-left:10px;}
-			code, .docs {border-radius:25px;}
+			code, .docs, .links {border-radius:25px;}
 			code {box-shadow:inset 4px 4px 4px #000; color: #fff; display:block;
 				padding:10px 40px 20px; margin:20px;}
-			.docs, h1 {background-color:#fff; box-shadow:4px 4px 4px #000;}
+			.docs, h1, .links {background-color:#fff; box-shadow:4px 4px 4px #000;}
 			.docs {margin:50px auto; max-width:760px; padding:20px;}
+			.links {position:fixed; margin:100px 0 0 -200px;
+				padding: 20px 0 20px 40px; width:100px;}
 		</style>
 		<title>API Docs</title>
 	</head>
 	<body>
 		<h1>API Docs</h1>
 		<div class="docs">
+		<ul class="links">
+			{% for model in docs %}
+			<li><a href="#{{model}}">{{model}}</a></li>
+			{% endfor %}
+		</ul>
 		{% for model, functions in docs.iteritems %}
 		<div class="model">
-			<h2>{{model}}</h2>
+			<a name="{{model}}"><h2>{{model}}</h2></a>
 			<ul>
 				{% for name, function in functions.iteritems %}
 				<li><a href="/api/{{model}}/{{name}}">{{name}}</a>
