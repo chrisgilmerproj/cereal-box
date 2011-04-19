@@ -14,9 +14,17 @@
 			code {box-shadow:inset 4px 4px 4px #000; color: #fff; display:block;
 				padding:10px 40px 20px; margin:20px;}
 			.docs, h1, .links {background-color:#fff; box-shadow:4px 4px 4px #000;}
-			.docs {margin:50px auto; max-width:600px; padding:20px;}
+			.docs {margin:50px auto; max-width:600px; min-width:300px; padding:20px;}
 			.links {position:fixed; margin:100px 0 0 -200px;
 				padding: 20px 0 20px 40px; width:100px;}
+			@media (max-width:1000px){
+				.anchor {display:block; padding-top:10px;}
+				.links {margin:0; padding:0; top:0; max-width:600px; width:auto;
+					box-shadow:none; border-bottom:1px solid #000;
+					border-radius:0;}
+				.links li {display:inline;}
+				h1 {margin-top:-10px;}
+			}
 		</style>
 		<title>API Docs</title>
 	</head>
@@ -30,7 +38,7 @@
 		</ul>
 		{% for model, functions in docs.iteritems %}
 		<div class="model">
-			<a name="{{model}}"><h2>{{model}}</h2></a>
+			<a class="anchor" name="{{model}}"><h2>{{model}}</h2></a>
 			<ul>
 				{% for name, function in functions.iteritems %}
 				<li><a href="/api/{{model}}/{{name}}">{{name}}</a>
