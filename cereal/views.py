@@ -10,8 +10,10 @@ def to_json(obj):
 	return translate.get(type(obj), str)(obj)
 
 def json_api(request, model, function):
+	vars = dict((str(k),v) for k, v in request.REQUEST.iteritems())
+	vars.update(dict((str(k), v) for k, v in request.FILES.iteritems()))
 	return HttpResponse(json.dumps(cereal.call(model, function,
-		**request.REQUEST), default=to_json), mimetype='application/json')
+		**vars), default=to_json), mimetype='application/json')
 
 def docs(request):
 	return render_to_response('cereal/docs.html', {'docs':cereal.docs})
