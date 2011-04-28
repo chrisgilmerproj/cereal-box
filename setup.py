@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-	name = 'cereal',
+	name = 'cereal-box',
 	packages = ['cereal',],
 	version = 'v1.0.0',
 	author = 'RED Interactive Agency',
