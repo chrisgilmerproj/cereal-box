@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
 	name = 'cereal',
 	packages = ['cereal',],
-	version = 'v0.1.0',
+	version = 'v1.0.0',
 	author = 'RED Interactive Agency',
 	author_email = 'geeks@ff0000.com',
 
