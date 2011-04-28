@@ -5,4 +5,5 @@ env
 *.pyc
 *.swp
 
-cereal.egg-info
+cereal_box.egg-info
+dist
