@@ -2,6 +2,7 @@ from django.db.models.query import ValuesQuerySet
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.utils import simplejson as json
+from django.conf import settings
 
 import cereal
 
@@ -12,8 +13,10 @@ def to_json(obj):
 def json_api(request, model, function):
 	vars = dict((str(k),v) for k, v in request.REQUEST.iteritems())
 	vars.update(dict((str(k), v) for k, v in request.FILES.iteritems()))
-	return HttpResponse(json.dumps(cereal.call(model, function,
+	response = HttpResponse(json.dumps(cereal.call(model, function,
 		**vars), default=to_json), mimetype='application/json')
+	if settings.DEBUG: response['Cache-Control'] = 'no-cache'
+	return response
 
 def docs(request):
 	return render_to_response('cereal/docs.html', {'docs':cereal.docs})
