@@ -1,5 +1,5 @@
 from django.db.models.query import ValuesQuerySet
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.utils import simplejson as json
 from django.conf import settings
@@ -13,9 +13,13 @@ def to_json(obj):
 def json_api(request, model, function):
 	vars = dict((str(k),v) for k, v in request.REQUEST.iteritems())
 	vars.update(dict((str(k), v) for k, v in request.FILES.iteritems()))
-	response = HttpResponse(json.dumps(cereal.call(model, function,
-		**vars), default=to_json), mimetype='application/json')
-	if settings.DEBUG: response['Cache-Control'] = 'no-cache'
+	try:
+		response = HttpResponse(json.dumps(cereal.call(model, function,
+			**vars), default=to_json), mimetype='application/json')
+		if settings.DEBUG: response['Cache-Control'] = 'no-cache'
+	except KeyError:
+		if settings.DEBUG: raise KeyError
+		else: raise Http404
 	return response
 
 def docs(request):
