@@ -18,8 +18,9 @@ def json_api(request, model, function):
 			**vars), default=to_json), mimetype='application/json')
 		if settings.DEBUG: response['Cache-Control'] = 'no-cache'
 	except KeyError:
-		if settings.DEBUG: raise KeyError
-		else: raise Http404
+		if not settings.DEBUG: 
+			raise Http404
+		raise 
 	return response
 
 def docs(request):

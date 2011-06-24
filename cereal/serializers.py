@@ -11,3 +11,6 @@ def values(include=None):
 		""" % include
 		return queryset.values(*include)
 	return values_fn
+
+def smart_values(queryset, *values):
+    return [dict((value, getattr(obj, value)) for value in values) for obj in queryset]
