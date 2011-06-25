@@ -7,3 +7,5 @@ env
 
 cereal_box.egg-info
 dist
+.project
+.pydevproject
