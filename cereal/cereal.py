@@ -64,7 +64,6 @@ def call(model, function, **kwargs):
     **kwargs - Function parameters.
     """
     logging.debug('%s.%s called with arguments %s' % (model, function ,kwargs))
-    print funcs
     return funcs[model][function](models[model], **kwargs)
 
 def ize(queryset):
