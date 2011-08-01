@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
 	name = 'cereal-box',
 	packages = ['cereal',],
-	version = 'v1.0.0',
+	version = 'v1.0.1',
 	author = 'RED Interactive Agency',
 	author_email = 'geeks@ff0000.com',
 
