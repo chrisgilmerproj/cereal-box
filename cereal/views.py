@@ -21,6 +21,7 @@ def to_json(obj):
 
 def json_api_timeout(request, model, function):
 	ip_address = request.META.get('REMOTE_ADDR',None)
+	response = HttpResponseServiceUnavailable()
 	if ip_address:
 		# Get/Set the number of requests per ip_address
 		req_count = cache.get(ip_address, 0) + 1
@@ -29,9 +30,6 @@ def json_api_timeout(request, model, function):
 		# If the req_count is less than the 
 		if req_count < REQUESTS_PER_TIMEOUT:
 			response = json_api(request, model, function)
-		raise HttpResponseServiceUnavailable
-	else:
-		raise HttpResponseServiceUnavailable
 	return response
 
 def json_api(request, model, function):
