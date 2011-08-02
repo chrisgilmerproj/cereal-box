@@ -1,14 +1,38 @@
+from django.conf import settings
+from django.core.cache import cache
 from django.db.models.query import ValuesQuerySet
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.utils import simplejson as json
-from django.conf import settings
 
 import cereal
+
+REQUESTS_TIMEOUT	 = getattr(settings, 'CEREAL_REQUESTS_TIMEOUT', 1)
+REQUESTS_PER_TIMEOUT = getattr(settings, 'CEREAL_REQUESTS_PER_TIMEOUT', 15)
+
+class HttpResponseServiceUnavailable(HttpResponse):
+	""" HTTP 503 is Service Unavailable """
+	status_code = 503
+
 
 translate = {ValuesQuerySet:lambda x: list(x)}
 def to_json(obj):
 	return translate.get(type(obj), str)(obj)
+
+def json_api_timeout(request, model, function):
+	ip_address = request.META.get('REMOTE_ADDR',None)
+	if ip_address:
+		# Get/Set the number of requests per ip_address
+		req_count = cache.get(ip_address, 0) + 1
+		cache.set(ip_address, req_count, REQUESTS_TIMEOUT)
+		
+		# If the req_count is less than the 
+		if req_count < REQUESTS_PER_TIMEOUT:
+			response = json_api(request, model, function)
+		raise HttpResponseServiceUnavailable
+	else:
+		raise HttpResponseServiceUnavailable
+	return response
 
 def json_api(request, model, function):
 	vars = dict((str(k),v) for k, v in request.REQUEST.iteritems())

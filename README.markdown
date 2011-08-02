@@ -44,6 +44,28 @@ cereal.register takes a third argument, a custom serializer.  This is called by 
 methods and also can be called manually on a queryset in your registered function with cerial.ize(queryset).
 Note that the serializer is tied to a *model* not to a function. TODO: change this behavior?
 
+### Settings
+
+When using the standard ceral api the ip addresses and the number of requests 
+from those ip addresses will be kept in the cache.  If the number of requests
+for a specific ip address exceeds the number or requests per the timeout
+then the user will receive a 503 error response, Service Unavailable.  
+
+The available settings to change this behavior are:
+
+    CEREAL_REQUESTS_TIMEOUT, default = 1 (seconds)
+    CEREAL_REQUESTS_PER_TIMEOUT, default = 15 (number requests)
+
+It is highly recommended that you use something fast like Redis or Memcache if you
+use the timeout view.  Otherwise you'll be using the Django cache which defaults
+to your registered database.
+
+If using the cache and the ip address timeout is not desired, simply write your 
+own url:
+
+    ('^api/(?P<model>\w+)/(?P<function>\w+)', cereal.views.json_api)   
+
+
 ## Calling a function
 
 You can do this in python, with a template tag, or via a JSON API call.
