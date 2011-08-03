@@ -3,13 +3,13 @@ from setuptools import setup
 setup(
 	name = 'cereal-box',
 	packages = ['cereal',],
-	version = '1.0.2',
+	version = '1.0.3',
 	author = 'RED Interactive Agency',
 	author_email = 'geeks@ff0000.com',
 
     package_data = {
         'cereal': [
-            'templates/*',
+            'templates/cereal/*',
         ]
     },
 
