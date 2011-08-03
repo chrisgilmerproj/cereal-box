@@ -7,6 +7,12 @@ setup(
 	author = 'RED Interactive Agency',
 	author_email = 'geeks@ff0000.com',
 
+    package_data = {
+        'cereal': [
+            'templates/*',
+        ]
+    },
+
 	url = 'http://www.github.com/ff0000/cereal-box/',
 	download_url = 'http://www.github.com/ff0000/cereal-box/',
 
